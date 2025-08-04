@@ -7,21 +7,10 @@ use Spatie\Permission\Models\Role;
 
 class RolesSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        Role::insert([
-            [
-                "name" => "admin",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "host",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "client",
-                "guard_name" => "web"
-            ],
-        ]);
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'host', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'client', 'guard_name' => 'web']);
     }
 }

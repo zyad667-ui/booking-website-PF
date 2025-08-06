@@ -5,48 +5,48 @@ use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
 | Routes Publiques
-|--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// Redirection intelligente après login
+Route::get('/properties', function () {
+    $listings = \App\Models\Listing::where('statut', 'publie')->with(['user', 'bookings'])->get();
+    return view('public.listings', compact('listings'));
+})->name('properties');
+
 Route::get('/dashboard', [RedirectController::class, 'redirectToDashboard'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
 /*
-|--------------------------------------------------------------------------
 | Routes Admin
-|--------------------------------------------------------------------------
+
 */
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-
+    Route::get('/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
     // Gestion des utilisateurs
     Route::get('/users', function () {
         return view('admin.users.index');
     })->name('users.index');
-
     // Gestion des annonces
     Route::get('/listings', function () {
         return view('admin.listings.index');
     })->name('listings.index');
-
     // Gestion des réservations
     Route::get('/bookings', function () {
         return view('admin.bookings.index');
     })->name('bookings.index');
-
     // Analytics
     Route::get('/analytics', function () {
         return view('admin.analytics');
     })->name('analytics');
+    
+    // Routes pour les contrôleurs
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::resource('listings', \App\Http\Controllers\ListingController::class);
+    Route::resource('bookings', \App\Http\Controllers\BookingController::class);
 });
 
 /*
@@ -55,9 +55,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified', 'host'])->prefix('host')->name('host.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('host.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\HostDashboardController::class, 'index'])->name('dashboard');
+    // Add more host routes here
 
     // Gestion des annonces
     Route::get('/listings', function () {
@@ -89,10 +88,7 @@ Route::middleware(['auth', 'verified', 'host'])->prefix('host')->name('host.')->
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified', 'client'])->prefix('client')->name('client.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('client.dashboard');
-    })->name('dashboard');
-
+    Route::get('/dashboard', [\App\Http\Controllers\ClientDashboardController::class, 'index'])->name('dashboard');
     // Réservations
     Route::get('/bookings', function () {
         return view('client.bookings.index');
@@ -116,6 +112,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Routes Publiques pour les annonces (visibles par tous)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('listings', \App\Http\Controllers\ListingController::class);
+    Route::resource('bookings', \App\Http\Controllers\BookingController::class);
 });
 
 require __DIR__ . '/auth.php';

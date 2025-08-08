@@ -15,6 +15,20 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('experiences')" :active="request()->routeIs('experiences')">
+                        {{ __('Expériences') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
+                        {{ __('Messages') }}
+                    </x-nav-link>
+                    @if(auth()->user()->hasRole('host'))
+                        <x-nav-link :href="route('host.calendar')" :active="request()->routeIs('host.calendar')">
+                            {{ __('Calendrier') }}
+                        </x-nav-link>
+                    @endif
+                    <x-nav-link :href="route('home') . '#contact'" :active="false" onclick="scrollToContact(event)">
+                        {{ __('Contact') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -36,6 +50,10 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        
+                        <x-dropdown-link :href="route('payments.history')">
+                            {{ __('Historique des paiements') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -70,6 +88,20 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('experiences')" :active="request()->routeIs('experiences')">
+                {{ __('Expériences') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
+                {{ __('Messages') }}
+            </x-responsive-nav-link>
+            @if(auth()->user()->hasRole('host'))
+                <x-responsive-nav-link :href="route('host.calendar')" :active="request()->routeIs('host.calendar')">
+                    {{ __('Calendrier') }}
+                </x-responsive-nav-link>
+            @endif
+            <x-responsive-nav-link :href="route('home') . '#contact'" :active="false" onclick="scrollToContact(event)">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -82,6 +114,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+                
+                <x-responsive-nav-link :href="route('payments.history')">
+                    {{ __('Historique des paiements') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -98,3 +134,20 @@
         </div>
     </div>
 </nav>
+
+<script>
+function scrollToContact(event) {
+    // Check if we're on the home page
+    if (window.location.pathname === '/' || window.location.pathname === '/home') {
+        event.preventDefault();
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+    // If not on home page, let the normal link behavior happen (redirect to home#contact)
+}
+</script>

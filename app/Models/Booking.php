@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'listing_id',
+        'date_debut',
+        'date_fin',
+        'statut',
+        'prix_total',
+    ];
+
     /**
      * Client (utilisateur ayant réservé)
      */

@@ -12,16 +12,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        
-        if ($user->hasRole('admin')) {
-            $listings = Listing::with('user')->get();
-        } elseif ($user->hasRole('host')) {
-            $listings = $user->listings;
-        } else {
-            $listings = Listing::where('statut', 'publie')->get();
-        }
-        
+        $listings = Listing::orderBy('created_at', 'desc')->paginate(10); // Changed from get() to paginate(10)
         return view('listings.index', compact('listings'));
     }
 
@@ -119,5 +110,18 @@ class ListingController extends Controller
         $listing->delete();
 
         return redirect()->route('listings.index')->with('success', 'Annonce supprimée avec succès !');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+        $listings = Listing::where('statut', 'publie')
+            ->where(function($q) use ($query) {
+                $q->where('adresse', 'like', "%{$query}%")
+                  ->orWhere('titre', 'like', "%{$query}%");
+            })
+            ->paginate(12);
+
+        return view('listings.search', compact('listings', 'query'));
     }
 }

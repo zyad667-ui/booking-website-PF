@@ -27,6 +27,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'role' => 'client', // Colonne role classique
         ]);
-        $testUser->assignRole('client'); 
+        $testUser->assignRole('client');
+
+        // 5. Seed les listings
+        $this->call([
+            ListingSeeder::class,
+        ]);
     }
 }

@@ -142,6 +142,25 @@
                     <div class="bg-white rounded-2xl shadow-soft border border-neutral-200 p-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions</h3>
                         <div class="space-y-3">
+                            @if(auth()->user()->id === $booking->user_id)
+                                @if(!$booking->payment || !$booking->payment->isSuccessful())
+                                    <a href="{{ route('payments.create', $booking) }}" 
+                                       class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                        </svg>
+                                        Payer maintenant
+                                    </a>
+                                @else
+                                    <div class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-100 text-green-800 rounded-lg">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Paiement effectué
+                                    </div>
+                                @endif
+                            @endif
+                            
                             @if(auth()->user()->hasRole('admin') || auth()->user()->id === $booking->user_id)
                                 <form action="{{ route('bookings.destroy', $booking) }}" method="POST" class="w-full">
                                     @csrf

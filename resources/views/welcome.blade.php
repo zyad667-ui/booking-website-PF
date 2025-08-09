@@ -103,9 +103,139 @@
         html {
             scroll-behavior: smooth;
         }
-            background-repeat: no-repeat;
-            background-size: cover;
+
+        /* House Showcase Gallery Styles */
+        .house-showcase-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
         }
+
+        .house-card {
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            animation: houseFloat 12s ease-in-out infinite;
+            animation-delay: var(--delay);
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+
+        .house-card:hover {
+            opacity: 1;
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .house-image {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .house-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .house-card:hover .house-overlay {
+            transform: translateY(0);
+        }
+
+        .house-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .house-info p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes houseFloat {
+            0%, 100% {
+                transform: translateY(0px) rotateY(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotateY(5deg);
+            }
+            50% {
+                transform: translateY(-10px) rotateY(-5deg);
+            }
+            75% {
+                transform: translateY(-15px) rotateY(3deg);
+            }
+        }
+
+        /* Position houses in a circle */
+        .house-card:nth-child(1) {
+            transform: translate(-400px, -100px) rotateY(15deg);
+        }
+        .house-card:nth-child(2) {
+            transform: translate(400px, -100px) rotateY(-15deg);
+        }
+        .house-card:nth-child(3) {
+            transform: translate(-200px, 200px) rotateY(10deg);
+        }
+        .house-card:nth-child(4) {
+            transform: translate(200px, 200px) rotateY(-10deg);
+        }
+        .house-card:nth-child(5) {
+            transform: translate(-300px, -200px) rotateY(20deg);
+        }
+        .house-card:nth-child(6) {
+            transform: translate(300px, -200px) rotateY(-20deg);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .house-card {
+                width: 200px;
+                height: 250px;
+            }
+            
+            .house-card:nth-child(1) {
+                transform: translate(-150px, -50px) rotateY(15deg);
+            }
+            .house-card:nth-child(2) {
+                transform: translate(150px, -50px) rotateY(-15deg);
+            }
+            .house-card:nth-child(3) {
+                transform: translate(-100px, 100px) rotateY(10deg);
+            }
+            .house-card:nth-child(4) {
+                transform: translate(100px, 100px) rotateY(-10deg);
+            }
+            .house-card:nth-child(5) {
+                transform: translate(-120px, -100px) rotateY(20deg);
+            }
+            .house-card:nth-child(6) {
+                transform: translate(120px, -100px) rotateY(-20deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .house-showcase-container {
+                display: none;
+            }
+        }
+
+        .background-repeat: no-repeat;
+        .background-size: cover;
     </style>
 </head>
 
@@ -181,6 +311,119 @@
                 style="animation-delay: 2s;"></div>
             <div class="absolute bottom-20 right-10 w-5 h-5 bg-white/25 rounded-full floating"
                 style="animation-delay: 3s;"></div>
+        </div>
+
+        <!-- House Showcase Gallery -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="house-showcase-container">
+                <!-- House 1 -->
+                <div class="house-card" style="--delay: 0s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Luxury Villa" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Villa de Luxe</h3>
+                                <p class="text-white/80 text-sm">Bali, Indonésie</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House 2 -->
+                <div class="house-card" style="--delay: 2s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Modern House" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Maison Moderne</h3>
+                                <p class="text-white/80 text-sm">Los Angeles, USA</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House 3 -->
+                <div class="house-card" style="--delay: 4s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80" 
+                             alt="Cozy Cottage" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Cottage Cosy</h3>
+                                <p class="text-white/80 text-sm">Provence, France</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House 4 -->
+                <div class="house-card" style="--delay: 6s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80" 
+                             alt="Beach House" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Maison de Plage</h3>
+                                <p class="text-white/80 text-sm">Maldives</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House 5 -->
+                <div class="house-card" style="--delay: 8s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Mountain Cabin" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Chalet Montagne</h3>
+                                <p class="text-white/80 text-sm">Alpes, Suisse</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- House 6 -->
+                <div class="house-card" style="--delay: 10s;">
+                    <div class="house-image">
+                        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Urban Loft" class="w-full h-full object-cover">
+                        <div class="house-overlay">
+                            <div class="house-info">
+                                <h3 class="text-white font-bold text-lg">Loft Urbain</h3>
+                                <p class="text-white/80 text-sm">New York, USA</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-white/80 text-sm ml-2">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8">

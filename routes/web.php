@@ -27,8 +27,22 @@ Route::get('/recherche', [ListingController::class, 'search'])->name('listings.s
 // Experiences page
 Route::get('/experiences', function () {
     $experiences = Listing::where('statut', 'publie')->paginate(12);
-    return view('experiences', compact('experiences'));
+    $moroccanProperties = config('images.moroccan_properties');
+    return view('experiences', compact('experiences', 'moroccanProperties'));
 })->name('experiences');
+
+// API route for dynamic images
+Route::get('/api/properties/moroccan', function () {
+    return response()->json(config('images.moroccan_properties'));
+})->name('api.moroccan.properties');
+
+// API route for Unsplash images
+Route::get('/api/images/moroccan', [\App\Http\Controllers\ImageController::class, 'getMoroccanHouses'])
+    ->name('api.moroccan.images');
+
+// API route for property images by type
+Route::get('/api/images/property/{type}', [\App\Http\Controllers\ImageController::class, 'getPropertyImageByType'])
+    ->name('api.property.image');
 
 /*
 | Routes Admin

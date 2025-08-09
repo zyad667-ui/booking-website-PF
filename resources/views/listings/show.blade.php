@@ -33,13 +33,25 @@
 
             <!-- Image principale avec overlay -->
             <div class="relative mb-8">
-                <div class="w-full h-96 bg-gradient-to-br from-blue-500 via-purple-600 to-pink-500 rounded-3xl relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <svg class="w-32 h-32 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                    </div>
+                @php
+                    // Images par défaut selon le type de propriété
+                    $defaultImages = [
+                        'villa' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'appartement' => 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'maison' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'riad' => 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'chalet' => 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'loft' => 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+                        'default' => 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+                    ];
+                    $propertyType = $listing->type ?? 'maison';
+                    $imageUrl = $defaultImages[$propertyType] ?? $defaultImages['default'];
+                @endphp
+                <div class="w-full h-96 rounded-3xl relative overflow-hidden">
+                    <img src="{{ $imageUrl }}" 
+                         alt="{{ $listing->titre }}" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                     
                     <!-- Badge de statut -->
                     <div class="absolute top-6 right-6">
@@ -72,6 +84,63 @@
                     <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 mb-8">
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">À propos de ce logement</h2>
                         <p class="text-gray-700 leading-relaxed mb-6">{{ $listing->description }}</p>
+                        
+                        <!-- Galerie d'images -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Photos du logement</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                @php
+                                    // Images supplémentaires selon le type
+                                    $additionalImages = [
+                                        'villa' => [
+                                            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                                        ],
+                                        'appartement' => [
+                                            'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                                        ],
+                                        'maison' => [
+                                            'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                                        ],
+                                        'riad' => [
+                                            'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                                        ],
+                                        'default' => [
+                                            'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+                                            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                                        ]
+                                    ];
+                                    $images = $additionalImages[$propertyType] ?? $additionalImages['default'];
+                                @endphp
+                                
+                                @foreach($images as $index => $imageUrl)
+                                <div class="relative group cursor-pointer overflow-hidden rounded-xl">
+                                    <img src="{{ $imageUrl }}" 
+                                         alt="Photo {{ $index + 1 }} de {{ $listing->titre }}" 
+                                         class="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+                                    <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                         
                         <!-- Caractéristiques -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -190,12 +259,78 @@
                             </div>
                         @endif
                     </div>
+                    
+                    <!-- Section environnement -->
+                    <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Autour de ce logement</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            @php
+                                // Images de l'environnement selon le type de propriété
+                                $environmentImages = [
+                                    'villa' => [
+                                        ['url' => 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Piscine privée', 'desc' => 'Profitez de votre piscine privée'],
+                                        ['url' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Terrasse panoramique', 'desc' => 'Vue imprenable sur les environs'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Jardin paysager', 'desc' => 'Espace extérieur aménagé']
+                                    ],
+                                    'appartement' => [
+                                        ['url' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Balcon privé', 'desc' => 'Votre espace extérieur en ville'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Vue urbaine', 'desc' => 'Panorama sur la ville'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Quartier animé', 'desc' => 'Proximité des commerces']
+                                    ],
+                                    'maison' => [
+                                        ['url' => 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Jardin privatif', 'desc' => 'Espace vert pour se détendre'],
+                                        ['url' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Terrasse', 'desc' => 'Idéal pour les repas en extérieur'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Quartier résidentiel', 'desc' => 'Environnement calme et sûr']
+                                    ],
+                                    'riad' => [
+                                        ['url' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Cour intérieure', 'desc' => 'Patio traditionnel marocain'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Médina', 'desc' => 'Au cœur de la vieille ville'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Terrasse sur le toit', 'desc' => 'Vue sur les toits de la ville']
+                                    ],
+                                    'default' => [
+                                        ['url' => 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Environnement', 'desc' => 'Cadre agréable'],
+                                        ['url' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Proximité', 'desc' => 'Accès facile aux commodités'],
+                                        ['url' => 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', 'title' => 'Quartier', 'desc' => 'Environnement convivial']
+                                    ]
+                                ];
+                                $envImages = $environmentImages[$propertyType] ?? $environmentImages['default'];
+                            @endphp
+                            
+                            @foreach($envImages as $envImage)
+                            <div class="group cursor-pointer">
+                                <div class="relative overflow-hidden rounded-xl mb-3">
+                                    <img src="{{ $envImage['url'] }}" 
+                                         alt="{{ $envImage['title'] }}" 
+                                         class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+                                </div>
+                                <h4 class="font-semibold text-gray-900 mb-1">{{ $envImage['title'] }}</h4>
+                                <p class="text-sm text-gray-600">{{ $envImage['desc'] }}</p>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Sidebar réservation -->
                 <div class="lg:col-span-1">
                     <div class="sticky top-8">
                         <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-6">
+                            <!-- Image de la propriété dans la sidebar -->
+                            <div class="mb-6">
+                                <div class="relative overflow-hidden rounded-xl">
+                                    <img src="{{ $imageUrl }}" 
+                                         alt="{{ $listing->titre }}" 
+                                         class="w-full h-48 object-cover">
+                                    <div class="absolute top-3 right-3">
+                                        <div class="bg-white/90 backdrop-blur-sm rounded-full p-2">
+                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="text-center mb-6">
                                 <div class="text-3xl font-bold text-gray-900 mb-2">€{{ number_format($listing->prix, 2) }}</div>
                                 <div class="text-gray-500">par nuit</div>

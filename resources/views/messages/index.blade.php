@@ -14,11 +14,27 @@
                         <div class="space-y-4">
                             @foreach($conversations as $conversation)
                                 @php
-                                    $otherParticipant = $conversation->getParticipantFromConversation(auth()->user());
+                                    // Récupérer les participants de la conversation
+                                    $participants = $conversation->getParticipants();
+                                    $currentUser = auth()->user();
+                                    
+                                    // Trouver l'autre participant (pas l'utilisateur actuel)
+                                    $otherParticipant = null;
+                                    foreach($participants as $participant) {
+                                        if ($participant->id !== $currentUser->id) {
+                                            $otherParticipant = $participant;
+                                            break;
+                                        }
+                                    }
+                                    
+                                    // Récupérer le dernier message
                                     $lastMessage = $conversation->getLastMessage();
-                                    $unreadCount = $conversation->unreadCount(auth()->user());
+                                    
+                                    // Compter les messages non lus
+                                    $unreadCount = $conversation->unreadCount($currentUser);
                                 @endphp
                                 
+                                @if($otherParticipant)
                                 <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                     <a href="{{ route('messages.show', $conversation->id) }}" class="block">
                                         <div class="flex items-center justify-between">
@@ -32,7 +48,7 @@
                                                     </h3>
                                                     @if($lastMessage)
                                                         <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                                            {{ $lastMessage->body }}
+                                                            {{ Str::limit($lastMessage->body, 50) }}
                                                         </p>
                                                     @endif
                                                 </div>
@@ -52,6 +68,7 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     @else

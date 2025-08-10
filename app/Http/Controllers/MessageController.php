@@ -42,8 +42,9 @@ class MessageController extends Controller
         }
         
         $messages = $this->chat->conversation($conversation)->setParticipant($user)->getMessages();
+        $otherParticipant = $this->getOtherParticipant($conversation, $user);
         
-        return view('messages.show', compact('conversation', 'messages'));
+        return view('messages.show', compact('conversation', 'messages', 'otherParticipant'));
     }
 
     /**
@@ -169,5 +170,21 @@ class MessageController extends Controller
         $otherUser = $booking->user_id === $user->id ? $booking->listing->user : $booking->user;
         
         return view('messages.contact-booking', compact('booking', 'otherUser'));
+    }
+
+    /**
+     * Helper: Récupérer l'autre participant d'une conversation
+     */
+    private function getOtherParticipant($conversation, $currentUser)
+    {
+        $participants = $conversation->getParticipants();
+        
+        foreach($participants as $participant) {
+            if ($participant->id !== $currentUser->id) {
+                return $participant;
+            }
+        }
+        
+        return null;
     }
 } 

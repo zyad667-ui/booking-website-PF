@@ -17,8 +17,20 @@
                     
                     <!-- En-tête de la conversation -->
                     @php
-                        $otherParticipant = $conversation->getParticipantFromConversation(auth()->user());
+                        // Récupérer les participants de la conversation
+                        $participants = $conversation->getParticipants();
+                        $currentUser = auth()->user();
+                        
+                        // Trouver l'autre participant (pas l'utilisateur actuel)
+                        $otherParticipant = null;
+                        foreach($participants as $participant) {
+                            if ($participant->id !== $currentUser->id) {
+                                $otherParticipant = $participant;
+                                break;
+                            }
+                        }
                     @endphp
+                    @if($otherParticipant)
                     <div class="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
@@ -30,6 +42,19 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div class="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gray-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                ?
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">Participant inconnu</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Impossible de récupérer les informations</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
 
                     <!-- Messages -->
                     <div class="space-y-4 mb-6" id="messages-container">

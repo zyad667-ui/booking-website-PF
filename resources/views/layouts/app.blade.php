@@ -13,16 +13,35 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Styles pour mode sombre avec fond blanc -->
+        <style>
+            .dark .dark\\:text-gray-200,
+            .dark .dark\\:text-gray-300,
+            .dark .dark\\:text-gray-400 {
+                color: rgb(31 41 55) !important; /* gray-800 */
+            }
+            
+            .dark .dark\\:bg-gray-800 {
+                background-color: white !important;
+            }
+            
+            .dark .dark\\:border-gray-700 {
+                border-color: rgb(209 213 219) !important; /* gray-300 */
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gray-100 dark:bg-white">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header class="bg-white dark:bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                        <div class="dark:text-gray-800">
+                            {{ $header }}
+                        </div>
                     </div>
                 </header>
             @endisset
@@ -98,7 +117,11 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @isset($slot)
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endisset
             </main>
         </div>
         
@@ -116,6 +139,15 @@
                         }, 500);
                     }, 5000);
                 });
+                
+                // Forcer les couleurs de texte en mode sombre pour être visibles sur fond blanc
+                if (document.documentElement.classList.contains('dark')) {
+                    const darkTextElements = document.querySelectorAll('.dark\\:text-gray-200, .dark\\:text-gray-300, .dark\\:text-gray-400');
+                    darkTextElements.forEach(function(element) {
+                        element.classList.remove('dark:text-gray-200', 'dark:text-gray-300', 'dark:text-gray-400');
+                        element.classList.add('dark:text-gray-800');
+                    });
+                }
             });
         </script>
     </body>

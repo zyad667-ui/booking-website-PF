@@ -101,10 +101,30 @@
                 @forelse($listings as $listing)
                     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition group">
                         <!-- Image de la propriété -->
-                        <div class="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center relative overflow-hidden">
-                            <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
+                        <div class="h-48 relative overflow-hidden">
+                            @php
+                                // Générer une image basée sur le type de propriété ou utiliser une image par défaut
+                                $imageUrl = '';
+                                $propertyType = strtolower($listing->type ?? 'maison');
+                                
+                                // Images statiques pour différents types de propriétés
+                                $propertyImages = [
+                                    'maison' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                                    'appartement' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2035&q=80',
+                                    'villa' => 'https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                                    'riad' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                                    'dar' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                                    'studio' => 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                                ];
+                                
+                                // Utiliser l'image correspondante au type ou une image par défaut
+                                $imageUrl = $propertyImages[$propertyType] ?? $propertyImages['maison'];
+                            @endphp
+                            
+                            <img src="{{ $imageUrl }}" 
+                                 alt="{{ $listing->titre }}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            
                             <!-- Badge de statut -->
                             @if($listing->statut === 'publie')
                                 <div class="absolute top-3 right-3">
@@ -113,6 +133,13 @@
                                     </span>
                                 </div>
                             @endif
+                            
+                            <!-- Badge de type de propriété -->
+                            <div class="absolute top-3 left-3">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    {{ ucfirst($propertyType) }}
+                                </span>
+                            </div>
                             <!-- Overlay au survol -->
                             <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                                 <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">

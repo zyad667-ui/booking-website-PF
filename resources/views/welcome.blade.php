@@ -490,7 +490,7 @@
         });
     </script>
 
-    <!-- Section Statistiques avec animations -->
+    <!-- Section Statistiques avec animations améliorées -->
     <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 fade-up">
@@ -503,42 +503,41 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center hover-lift">
+                <!-- Propriétés uniques -->
+                <div class="group text-center transform transition-all duration-500 hover:scale-110 hover:-translate-y-2">
                     <div class="relative">
-                        <div
-                            class="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center pulse-glow">
-                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center pulse-glow group-hover:shadow-2xl group-hover:shadow-blue-500/50 transition-all duration-500">
+                            <svg class="w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
                                 </path>
                             </svg>
                         </div>
-                        <div
-                            class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                             <span class="text-white text-sm font-bold">+</span>
                         </div>
                     </div>
-                    <div class="text-5xl font-bold text-gray-900 mb-2">10,000</div>
-                    <div class="text-gray-600 font-medium">Propriétés uniques</div>
+                    <div class="text-5xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">10,000</div>
+                    <div class="text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-300">Propriétés uniques</div>
                 </div>
 
-                <div class="text-center hover-lift">
-                    <div
-                        class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Voyageurs satisfaits -->
+                <div class="group text-center transform transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div class="w-24 h-24 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:shadow-2xl group-hover:shadow-emerald-500/50 transition-all duration-500">
+                        <svg class="w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z">
                             </path>
                         </svg>
                     </div>
-                    <div class="text-5xl font-bold text-gray-900 mb-2">50,000</div>
-                    <div class="text-gray-600 font-medium">Voyageurs satisfaits</div>
+                    <div class="text-5xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors duration-300">50,000</div>
+                    <div class="text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-300">Voyageurs satisfaits</div>
                 </div>
 
-                <div class="text-center hover-lift">
-                    <div
-                        class="w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Pays couverts -->
+                <div class="group text-center transform transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div class="w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:shadow-2xl group-hover:shadow-orange-500/50 transition-all duration-500">
+                        <svg class="w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
                             </path>
@@ -546,26 +545,26 @@
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <div class="text-5xl font-bold text-gray-900 mb-2">150+</div>
-                    <div class="text-gray-600 font-medium">Pays couverts</div>
+                    <div class="text-5xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">150+</div>
+                    <div class="text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-300">Pays couverts</div>
                 </div>
 
-                <div class="text-center hover-lift">
-                    <div
-                        class="w-24 h-24 bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Support premium -->
+                <div class="group text-center transform transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+                    <div class="w-24 h-24 bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl mx-auto mb-6 flex items-center justify-center group-hover:shadow-2xl group-hover:shadow-rose-500/50 transition-all duration-500">
+                        <svg class="w-12 h-12 text-white group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <div class="text-5xl font-bold text-gray-900 mb-2">24/7</div>
-                    <div class="text-gray-600 font-medium">Support premium</div>
+                    <div class="text-5xl font-bold text-gray-900 mb-2 group-hover:text-rose-600 transition-colors duration-300">24/7</div>
+                    <div class="text-gray-600 font-medium group-hover:text-gray-800 transition-colors duration-300">Support premium</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Propriétés avec design unique -->
+    <!-- Section Destinations avec vraies photos -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 fade-up">
@@ -578,175 +577,175 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Propriété 1 avec effet 3D -->
-                <div class="group relative hover-lift">
-                    <div
-                        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 p-1">
+                <!-- Villa Bali avec vue océan -->
+                <div class="group relative transform transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 p-1 shadow-xl group-hover:shadow-2xl transition-all duration-500">
                         <div class="bg-white rounded-3xl p-6 h-full">
                             <div class="relative mb-6">
-                                <div
-                                    class="w-full h-48 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                                    <svg class="w-20 h-20 text-white/80" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                        </path>
-                                    </svg>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                <div class="w-full h-48 rounded-2xl overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                         alt="Villa Bali" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                                     <div class="absolute top-4 right-4">
-                                        <span
-                                            class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">Disponible</span>
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white shadow-lg">Disponible</span>
+                                    </div>
+                                    <div class="absolute bottom-4 left-4">
+                                        <div class="flex items-center text-white">
+                                            <span class="text-yellow-400 mr-1">★★★★★</span>
+                                            <span class="text-sm font-medium">4.9</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="absolute -bottom-3 left-4">
-                                    <div
-                                        class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                                         <span class="text-white font-bold">★</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Villa avec vue océan</h3>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300">Villa avec vue océan</h3>
                             <p class="text-gray-600 mb-4">Bali, Indonésie</p>
 
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center text-sm text-gray-500">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                        </path>
-                                    </svg>
+                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center mr-2">
+                                        <span class="text-white text-xs font-bold">S</span>
+                                    </div>
                                     Sarah & Marc
                                 </div>
-                                <div class="text-sm text-gray-500">4.9 ★</div>
+                                <div class="text-sm text-gray-500">Superhost</div>
                             </div>
 
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-3xl font-bold text-gray-900">€180</span>
+                                    <span class="text-3xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">€180</span>
                                     <span class="text-gray-500">/nuit</span>
                                 </div>
-                                <button
-                                    class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-6 py-2 rounded-full hover:from-amber-600 hover:to-orange-700 transition-all duration-300 font-medium">
+                                @auth
+                                    <a href="{{ route('properties') }}" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-6 py-2 rounded-full hover:from-amber-600 hover:to-orange-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
                                     Réserver
-                                </button>
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-6 py-2 rounded-full hover:from-amber-600 hover:to-orange-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
+                                        Réserver
+                                    </a>
+                                @endauth
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Propriété 2 -->
-                <div class="group relative hover-lift">
-                    <div
-                        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 p-1">
+                <!-- Loft Berlin -->
+                <div class="group relative transform transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 p-1 shadow-xl group-hover:shadow-2xl transition-all duration-500">
                         <div class="bg-white rounded-3xl p-6 h-full">
                             <div class="relative mb-6">
-                                <div
-                                    class="w-full h-48 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                                    <svg class="w-20 h-20 text-white/80" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                        </path>
-                                    </svg>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                <div class="w-full h-48 rounded-2xl overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                                         alt="Loft Berlin" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                                     <div class="absolute top-4 right-4">
-                                        <span
-                                            class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">Disponible</span>
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white shadow-lg">Disponible</span>
+                                    </div>
+                                    <div class="absolute bottom-4 left-4">
+                                        <div class="flex items-center text-white">
+                                            <span class="text-yellow-400 mr-1">★★★★★</span>
+                                            <span class="text-sm font-medium">4.8</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="absolute -bottom-3 left-4">
-                                    <div
-                                        class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                                         <span class="text-white font-bold">★</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Loft industriel chic</h3>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-teal-600 transition-colors duration-300">Loft industriel chic</h3>
                             <p class="text-gray-600 mb-4">Berlin, Allemagne</p>
 
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center text-sm text-gray-500">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                        </path>
-                                    </svg>
+                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600 flex items-center justify-center mr-2">
+                                        <span class="text-white text-xs font-bold">A</span>
+                                    </div>
                                     Anna & Tom
                                 </div>
-                                <div class="text-sm text-gray-500">4.8 ★</div>
+                                <div class="text-sm text-gray-500">Superhost</div>
                             </div>
 
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-3xl font-bold text-gray-900">€120</span>
+                                    <span class="text-3xl font-bold text-gray-900 group-hover:text-teal-600 transition-colors duration-300">€120</span>
                                     <span class="text-gray-500">/nuit</span>
                                 </div>
-                                <button
-                                    class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-2 rounded-full hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 font-medium">
+                                @auth
+                                    <a href="{{ route('properties') }}" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-2 rounded-full hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
                                     Réserver
-                                </button>
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-2 rounded-full hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
+                                        Réserver
+                                    </a>
+                                @endauth
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Propriété 3 -->
-                <div class="group relative hover-lift">
-                    <div
-                        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-400 via-pink-500 to-purple-500 p-1">
+                <!-- Maison Kyoto -->
+                <div class="group relative transform transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-400 via-pink-500 to-purple-500 p-1 shadow-xl group-hover:shadow-2xl transition-all duration-500">
                         <div class="bg-white rounded-3xl p-6 h-full">
                             <div class="relative mb-6">
-                                <div
-                                    class="w-full h-48 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                                    <svg class="w-20 h-20 text-white/80" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                        </path>
-                                    </svg>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                <div class="w-full h-48 rounded-2xl overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80" 
+                                         alt="Maison Kyoto" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                                     <div class="absolute top-4 right-4">
-                                        <span
-                                            class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">Disponible</span>
+                                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white shadow-lg">Disponible</span>
+                                    </div>
+                                    <div class="absolute bottom-4 left-4">
+                                        <div class="flex items-center text-white">
+                                            <span class="text-yellow-400 mr-1">★★★★★</span>
+                                            <span class="text-sm font-medium">4.9</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="absolute -bottom-3 left-4">
-                                    <div
-                                        class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                                         <span class="text-white font-bold">★</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Maison traditionnelle</h3>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors duration-300">Maison traditionnelle</h3>
                             <p class="text-gray-600 mb-4">Kyoto, Japon</p>
 
                             <div class="flex items-center justify-between mb-4">
                                 <div class="flex items-center text-sm text-gray-500">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                        </path>
-                                    </svg>
+                                    <div class="w-6 h-6 rounded-full bg-gradient-to-r from-pink-400 to-pink-600 flex items-center justify-center mr-2">
+                                        <span class="text-white text-xs font-bold">H</span>
+                                    </div>
                                     Hiro & Yuki
                                 </div>
-                                <div class="text-sm text-gray-500">4.9 ★</div>
+                                <div class="text-sm text-gray-500">Superhost</div>
                             </div>
 
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-3xl font-bold text-gray-900">€200</span>
+                                    <span class="text-3xl font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">€200</span>
                                     <span class="text-gray-500">/nuit</span>
                                 </div>
-                                <button
-                                    class="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-6 py-2 rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 font-medium">
+                                @auth
+                                    <a href="{{ route('properties') }}" class="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-6 py-2 rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
                                     Réserver
-                                </button>
+                                    </a>
+                                @else
+                                    <a href="{{ route('login') }}" class="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-6 py-2 rounded-full hover:from-rose-600 hover:to-pink-700 transition-all duration-300 font-medium group-hover:shadow-lg transform group-hover:scale-105 inline-block">
+                                        Réserver
+                                    </a>
+                                @endauth
                             </div>
                         </div>
                     </div>
@@ -765,20 +764,26 @@
                     <div>
                         <h3 class="text-2xl font-bold mb-4">Contact</h3>
                         <p class="text-blue-100 mb-6">Une question, une demande spécifique, ou besoin d'aide ? Envoyez-nous un message.</p>
-                        <form action="#" method="POST" class="space-y-4">
+                        <form action="{{ route('contact.send') }}" method="POST" class="space-y-4">
+                            @csrf
                             <div>
                                 <label class="block text-sm mb-2">Nom</label>
-                                <input type="text" class="w-full px-4 py-3 rounded-lg text-gray-900" placeholder="Votre nom" required>
+                                <input type="text" name="name" class="w-full px-4 py-3 rounded-lg text-gray-900" placeholder="Votre nom" required>
                             </div>
                             <div>
                                 <label class="block text-sm mb-2">Email</label>
-                                <input type="email" class="w-full px-4 py-3 rounded-lg text-gray-900" placeholder="vous@example.com" required>
+                                <input type="email" name="email" class="w-full px-4 py-3 rounded-lg text-gray-900" placeholder="vous@example.com" required>
                             </div>
                             <div>
                                 <label class="block text-sm mb-2">Message</label>
-                                <textarea class="w-full px-4 py-3 rounded-lg text-gray-900" rows="4" placeholder="Votre message..." required></textarea>
+                                <textarea name="message" class="w-full px-4 py-3 rounded-lg text-gray-900" rows="4" placeholder="Votre message..." required></textarea>
                             </div>
                             <button type="submit" class="bg-white/20 text-white px-6 py-3 rounded-lg hover:bg-white/30 transition">Envoyer</button>
+                            @if(session('success'))
+                                <div class="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                         </form>
                     </div>
                     <div class="space-y-4">

@@ -391,10 +391,10 @@
 
                             <!-- Actions rapides -->
                             <div class="mt-6 space-y-3">
-                                <button class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-300">
+                                <a href="{{ route('messages.contact.listing', $listing) }}" class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-300 block text-center">
                                     Contacter l'hôte
-                                </button>
-                                <button class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-300">
+                                </a>
+                                <button onclick="shareProperty()" class="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors duration-300">
                                     Partager
                                 </button>
                             </div>
@@ -404,4 +404,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function shareProperty() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '{{ $listing->titre }} - PlaceZo',
+                    text: 'Découvrez cette propriété incroyable sur PlaceZo !',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback pour les navigateurs qui ne supportent pas l'API Web Share
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Lien copié dans le presse-papiers !');
+                }).catch(() => {
+                    // Fallback final
+                    const textArea = document.createElement('textarea');
+                    textArea.value = window.location.href;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('Lien copié dans le presse-papiers !');
+                });
+            }
+        }
+    </script>
 </x-app-layout> 

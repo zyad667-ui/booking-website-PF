@@ -19,6 +19,20 @@ Route::get('/properties', function () {
     return view('public.listings', compact('listings'));
 })->name('properties');
 
+// Route pour le contact
+Route::post('/contact', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string|max:1000',
+    ]);
+    
+    // Ici vous pouvez ajouter la logique pour envoyer l'email
+    // Par exemple, utiliser Mail::to() pour envoyer un email
+    
+    return redirect()->back()->with('success', 'Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
+})->name('contact.send');
+
 Route::get('/dashboard', [RedirectController::class, 'redirectToDashboard'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -92,7 +106,12 @@ Route::middleware(['auth', 'verified', 'host'])->prefix('host')->name('host.')->
 
     // Gestion des réservations
     Route::get('/bookings', function () {
-        return view('host.bookings.index');
+        $user = auth()->user();
+        $bookings = \App\Models\Booking::whereHas('listing', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->with(['user', 'listing'])->orderBy('created_at', 'desc')->get();
+        
+        return view('host.bookings.index', compact('bookings'));
     })->name('bookings.index');
 
     // Calendrier

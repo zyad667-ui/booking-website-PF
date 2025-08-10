@@ -187,7 +187,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    @if(isset($listings) && $listings->hasPages())
+                    @if(isset($listings) && method_exists($listings, 'hasPages') && $listings->hasPages())
                     <div class="mt-6">
                         {{ $listings->links() }}
                     </div>

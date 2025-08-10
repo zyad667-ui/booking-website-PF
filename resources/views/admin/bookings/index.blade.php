@@ -218,7 +218,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    @if(isset($bookings) && $bookings->hasPages())
+                    @if(isset($bookings) && method_exists($bookings, 'hasPages') && $bookings->hasPages())
                     <div class="mt-6">
                         {{ $bookings->links() }}
                     </div>

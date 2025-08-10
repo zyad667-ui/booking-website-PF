@@ -107,6 +107,16 @@
                                            class="text-gray-600 hover:text-gray-700 text-sm font-medium">
                                             Modifier
                                         </a>
+                                    @else
+                                        <!-- Boutons pour les clients -->
+                                        <a href="{{ route('messages.contact.listing', $listing) }}" 
+                                           class="text-gray-600 hover:text-gray-700 text-sm font-medium border border-gray-300 px-2 py-1 rounded">
+                                            Contacter
+                                        </a>
+                                        <a href="{{ route('bookings.create') }}?listing_id={{ $listing->id }}" 
+                                           class="bg-blue-600 text-white px-2 py-1 rounded text-sm font-medium hover:bg-blue-700 transition">
+                                            Réserver
+                                        </a>
                                     @endif
                                 </div>
                             </div>

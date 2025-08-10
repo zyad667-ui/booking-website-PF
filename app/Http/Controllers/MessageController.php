@@ -54,21 +54,35 @@ class MessageController extends Controller
         $request->validate([
             'recipient_id' => 'required|exists:users,id',
             'message' => 'required|string|max:1000',
+            'subject' => 'nullable|string|max:255',
+            'listing_id' => 'nullable|exists:listings,id',
         ]);
 
         $user = auth()->user();
         $recipient = User::findOrFail($request->recipient_id);
         
+        // Vérifier que l'utilisateur ne s'envoie pas un message à lui-même
+        if ($user->id === $recipient->id) {
+            return redirect()->back()->withErrors(['recipient_id' => 'Vous ne pouvez pas vous envoyer un message à vous-même.']);
+        }
+        
         // Créer ou récupérer la conversation
         $conversation = $this->chat->createConversation([$user, $recipient]);
         
+        // Ajouter le sujet au message si fourni
+        $messageContent = $request->message;
+        if ($request->subject) {
+            $messageContent = "**" . $request->subject . "**\n\n" . $messageContent;
+        }
+        
         // Envoyer le premier message
-        $this->chat->message($request->message)
+        $this->chat->message($messageContent)
             ->from($user)
             ->to($conversation)
             ->send();
         
-        return redirect()->route('messages.show', $conversation->id);
+        return redirect()->route('messages.show', $conversation->id)
+                        ->with('success', 'Votre message a été envoyé avec succès !');
     }
 
     /**

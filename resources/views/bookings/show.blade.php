@@ -15,7 +15,69 @@
                         <p class="text-gray-600 mt-1">{{ $booking->listing->titre }}</p>
                     </div>
                     <div class="flex space-x-3">
-                        @if(auth()->user()->hasRole('admin') || auth()->user()->id === $booking->user_id)
+                        <!-- Actions pour l'hôte -->
+                        @if($booking->listing->user_id === auth()->user()->id)
+                            @if($booking->statut === 'en_attente')
+                                <form method="POST" action="{{ route('bookings.update', $booking) }}" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="statut" value="confirmee">
+                                    <button type="submit" 
+                                            class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                                            onclick="return confirm('Confirmer cette réservation ?')">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Confirmer
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('bookings.update', $booking) }}" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="statut" value="annulee">
+                                    <button type="submit" 
+                                            class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                            onclick="return confirm('Refuser cette réservation ?')">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                        Refuser
+                                    </button>
+                                </form>
+                            @endif
+                            
+                            <a href="{{ route('messages.contact.booking', $booking) }}" 
+                               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Contacter le client
+                            </a>
+                        @endif
+
+                        <!-- Actions pour le client -->
+                        @if($booking->user_id === auth()->user()->id)
+                            @if($booking->statut === 'confirmee')
+                                <a href="{{ route('payments.create', $booking) }}" 
+                                   class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                    Payer maintenant
+                                </a>
+                            @endif
+                            
+                            <a href="{{ route('messages.contact.booking', $booking) }}" 
+                               class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Contacter l'hôte
+                            </a>
+                        @endif
+
+                        <!-- Actions pour l'admin -->
+                        @if(auth()->user()->hasRole('admin'))
                             <a href="{{ route('bookings.edit', $booking) }}" 
                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,6 +86,7 @@
                                 Modifier
                             </a>
                         @endif
+                        
                         <a href="{{ route('bookings.index') }}" 
                            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,6 +94,104 @@
                             </svg>
                             Retour
                         </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statut de la réservation -->
+            <div class="bg-white rounded-2xl shadow-soft border border-neutral-200 mb-8 p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            @switch($booking->statut)
+                                @case('en_attente')
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    @break
+                                @case('confirmee')
+                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    @break
+                                @case('annulee')
+                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </div>
+                                    @break
+                                @case('terminee')
+                                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    @break
+                            @endswitch
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">
+                                @switch($booking->statut)
+                                    @case('en_attente')
+                                        Réservation en attente de confirmation
+                                        @break
+                                    @case('confirmee')
+                                        Réservation confirmée
+                                        @break
+                                    @case('annulee')
+                                        Réservation annulée
+                                        @break
+                                    @case('terminee')
+                                        Séjour terminé
+                                        @break
+                                @endswitch
+                            </h3>
+                            <p class="text-gray-600 text-sm">
+                                @switch($booking->statut)
+                                    @case('en_attente')
+                                        L'hôte doit confirmer votre demande de réservation.
+                                        @break
+                                    @case('confirmee')
+                                        Votre réservation a été acceptée ! Vous pouvez procéder au paiement.
+                                        @break
+                                    @case('annulee')
+                                        Cette réservation a été annulée.
+                                        @break
+                                    @case('terminee')
+                                        Votre séjour est terminé. Vous pouvez laisser un avis.
+                                        @break
+                                @endswitch
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        @switch($booking->statut)
+                            @case('en_attente')
+                                <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                    En attente
+                                </span>
+                                @break
+                            @case('confirmee')
+                                <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800">
+                                    Confirmée
+                                </span>
+                                @break
+                            @case('annulee')
+                                <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800">
+                                    Annulée
+                                </span>
+                                @break
+                            @case('terminee')
+                                <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-gray-100 text-gray-800">
+                                    Terminée
+                                </span>
+                                @break
+                        @endswitch
                     </div>
                 </div>
             </div>

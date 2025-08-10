@@ -201,7 +201,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    @if(isset($favorites) && $favorites->hasPages())
+                    @if(isset($favorites) && method_exists($favorites, 'hasPages') && $favorites->hasPages())
                     <div class="mt-6">
                         {{ $favorites->links() }}
                     </div>

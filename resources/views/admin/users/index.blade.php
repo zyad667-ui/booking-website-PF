@@ -133,7 +133,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    @if(isset($users) && $users->hasPages())
+                    @if(isset($users) && method_exists($users, 'hasPages') && $users->hasPages())
                     <div class="mt-6">
                         {{ $users->links() }}
                     </div>

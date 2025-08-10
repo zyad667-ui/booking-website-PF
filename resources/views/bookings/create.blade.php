@@ -29,7 +29,7 @@
                             @foreach($listings as $listing)
                                 <option value="{{ $listing->id }}" 
                                         data-prix="{{ $listing->prix }}"
-                                        {{ old('listing_id') == $listing->id ? 'selected' : '' }}>
+                                        {{ (old('listing_id') == $listing->id || request('listing_id') == $listing->id) ? 'selected' : '' }}>
                                     {{ $listing->titre }} - {{ $listing->adresse }} ({{ number_format($listing->prix, 2) }}€/nuit)
                                 </option>
                             @endforeach
@@ -96,6 +96,25 @@
                         </div>
                     </div>
 
+                    <!-- Calcul du prix -->
+                    <div id="prix-calcul" class="hidden bg-gray-50 rounded-lg p-6 space-y-4 mt-6">
+                        <h3 class="text-lg font-semibold text-gray-900">Résumé de la réservation</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Prix par nuit</span>
+                                <span id="prix-nuit" class="font-medium">0€</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Nombre de nuits</span>
+                                <span id="nombre-nuits" class="font-medium">0</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200">
+                                <span>Total</span>
+                                <span id="prix-total" class="text-blue-600">0€</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Boutons -->
                     <div class="flex items-center justify-between pt-6">
                         <a href="{{ route('bookings.index') }}" 
@@ -107,7 +126,7 @@
                         </a>
                         
                         <button type="submit" 
-                                class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition">
+                                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
@@ -120,8 +139,12 @@
     </div>
 
     <script>
+        console.log('Script de calcul chargé');
+        
         // Calcul automatique du prix
         function calculerPrix() {
+            console.log('Fonction calculerPrix appelée');
+            
             const listingSelect = document.getElementById('listing_id');
             const dateDebut = document.getElementById('date_debut');
             const dateFin = document.getElementById('date_fin');
@@ -130,27 +153,80 @@
             const nombreNuits = document.getElementById('nombre-nuits');
             const prixTotal = document.getElementById('prix-total');
 
-            if (listingSelect.value && dateDebut.value && dateFin.value) {
+            console.log('Éléments trouvés:', {
+                listingSelect: !!listingSelect,
+                dateDebut: !!dateDebut,
+                dateFin: !!dateFin,
+                prixCalcul: !!prixCalcul
+            });
+
+            if (listingSelect && listingSelect.value && dateDebut && dateDebut.value && dateFin && dateFin.value) {
                 const selectedOption = listingSelect.options[listingSelect.selectedIndex];
                 const prix = parseFloat(selectedOption.dataset.prix);
-                const debut = new Date(dateDebut.value);
-                const fin = new Date(dateFin.value);
-                const nuits = Math.ceil((fin - debut) / (1000 * 60 * 60 * 24));
+                
+                console.log('Prix sélectionné:', prix);
+                
+                // Calcul correct du nombre de nuits
+                const debut = new Date(dateDebut.value + 'T00:00:00');
+                const fin = new Date(dateFin.value + 'T00:00:00');
+                
+                const diffTime = fin.getTime() - debut.getTime();
+                const nuits = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+                console.log('Calcul:', {
+                    debut: debut.toDateString(),
+                    fin: fin.toDateString(),
+                    nuits: nuits,
+                    total: prix * nuits
+                });
 
-                if (nuits > 0) {
-                    prixNuit.textContent = prix.toFixed(2) + '€';
-                    nombreNuits.textContent = nuits;
-                    prixTotal.textContent = (prix * nuits).toFixed(2) + '€';
-                    prixCalcul.classList.remove('hidden');
+                if (nuits > 0 && fin > debut && !isNaN(prix)) {
+                    if (prixNuit) prixNuit.textContent = prix.toFixed(2) + '€';
+                    if (nombreNuits) nombreNuits.textContent = nuits;
+                    if (prixTotal) prixTotal.textContent = (prix * nuits).toFixed(2) + '€';
+                    if (prixCalcul) prixCalcul.classList.remove('hidden');
+                    
+                    console.log('Affichage mis à jour');
+                } else {
+                    if (prixCalcul) prixCalcul.classList.add('hidden');
+                    
+                    if (fin <= debut) {
+                        alert('La date de fin doit être postérieure à la date de début.');
+                    }
+                    console.log('Calcul caché - conditions non remplies');
                 }
             } else {
-                prixCalcul.classList.add('hidden');
+                if (prixCalcul) prixCalcul.classList.add('hidden');
+                console.log('Calcul caché - données manquantes');
             }
         }
 
-        // Événements
-        document.getElementById('listing_id').addEventListener('change', calculerPrix);
-        document.getElementById('date_debut').addEventListener('change', calculerPrix);
-        document.getElementById('date_fin').addEventListener('change', calculerPrix);
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM chargé');
+            
+            // Événements
+            const listingSelect = document.getElementById('listing_id');
+            const dateDebut = document.getElementById('date_debut');
+            const dateFin = document.getElementById('date_fin');
+            
+            if (listingSelect) {
+                listingSelect.addEventListener('change', calculerPrix);
+                console.log('Event listener ajouté à listing_id');
+            }
+            
+            if (dateDebut) {
+                dateDebut.addEventListener('change', calculerPrix);
+                console.log('Event listener ajouté à date_debut');
+            }
+            
+            if (dateFin) {
+                dateFin.addEventListener('change', calculerPrix);
+                console.log('Event listener ajouté à date_fin');
+            }
+
+            // Calcul initial si un listing est pré-sélectionné
+            setTimeout(calculerPrix, 100);
+        });
     </script>
 </x-app-layout> 

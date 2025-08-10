@@ -65,7 +65,7 @@
                                         <span class="text-xs opacity-75">{{ $message->sender->name }}</span>
                                         <span class="text-xs opacity-75">{{ $message->created_at->format('H:i') }}</span>
                                     </div>
-                                    <p class="text-sm">{{ $message->body }}</p>
+                                    <p class="text-sm">{!! nl2br(e($message->body)) !!}</p>
                                 </div>
                             </div>
                         @endforeach

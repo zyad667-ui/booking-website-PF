@@ -48,7 +48,7 @@
                                                     </h3>
                                                     @if($lastMessage)
                                                         <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
-                                                            {{ Str::limit($lastMessage->body, 50) }}
+                                                            {{ \Illuminate\Support\Str::limit($lastMessage->body, 50) }}
                                                         </p>
                                                     @endif
                                                 </div>

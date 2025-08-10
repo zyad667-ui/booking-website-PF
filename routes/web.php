@@ -194,4 +194,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Stripe webhook route (no auth required)
 Route::post('/stripe/webhook', [\App\Http\Controllers\StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
 
+// Test email route
+Route::get('/send-test-email', [App\Http\Controllers\UserController::class, 'sendWelcomeEmail']);
+
 require __DIR__ . '/auth.php';

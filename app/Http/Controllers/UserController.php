@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\WelcomeUserMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -117,5 +119,16 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé avec succès !');
+    }
+
+    /**
+     * Send test welcome email
+     */
+    public function sendWelcomeEmail()
+    {
+        $userName = "Zyad Fiach";
+        $recipientEmail = "email@you.want";
+        Mail::to($recipientEmail)->send(new WelcomeUserMail($userName));
+        return "Email sent successfully!";
     }
 }

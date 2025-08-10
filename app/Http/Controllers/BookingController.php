@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingNotificationMail;
 use App\Models\Booking;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Musonza\Chat\Chat;
 
 class BookingController extends Controller
@@ -78,6 +80,8 @@ class BookingController extends Controller
 
         // Notifier l'hôte via message (méthode simplifiée)
         $notificationSent = false;
+        $emailSent = false;
+        
         try {
             $chat = app(Chat::class);
             
@@ -112,10 +116,33 @@ class BookingController extends Controller
             ]);
         }
 
+        // Envoyer un email à l'hôte
+        try {
+            Mail::to($listing->user->email)->send(new BookingNotificationMail(
+                $booking,
+                $listing->user->name,
+                $user->name
+            ));
+            $emailSent = true;
+            \Log::info('Email de notification envoyé avec succès à l\'hôte', [
+                'host_email' => $listing->user->email,
+                'booking_id' => $booking->id
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Erreur envoi email hôte : ' . $e->getMessage(), [
+                'host_email' => $listing->user->email,
+                'booking_id' => $booking->id
+            ]);
+        }
+
         // Message de succès adapté
         $successMessage = 'Réservation créée avec succès !';
-        if ($notificationSent) {
-            $successMessage .= ' L\'hôte a été notifié de votre demande.';
+        if ($notificationSent && $emailSent) {
+            $successMessage .= ' L\'hôte a été notifié par message et email.';
+        } elseif ($notificationSent) {
+            $successMessage .= ' L\'hôte a été notifié par message.';
+        } elseif ($emailSent) {
+            $successMessage .= ' L\'hôte a été notifié par email.';
         } else {
             $successMessage .= ' Vous pouvez contacter l\'hôte via la messagerie.';
         }
